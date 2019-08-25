@@ -3,6 +3,8 @@ package com.guru99.kdd;
 public class TestCaseExecutor {
 
 	public static void main(String[] args) throws Exception {
+		
+
 		ReusableFuntion func=new ReusableFuntion();
 		String [][] keywordData=func.fetchDataFromExcelsheet();
 		
@@ -13,15 +15,20 @@ public class TestCaseExecutor {
 			String data=keywordData[i][6];
 			
 			System.out.println(function+"\t"+locator+"\t"+locatorValue+"\t"+data);
-			switch(function) {
-				case "launchApp":
-					func.launchApp();
-				case "fillText":
-					func.fillText(locator, locatorValue, data);
-				case "click":
-					func.click(locator, locatorValue);
+			String result = "passed";
+			try {
+				switch(function) {
+					case "launchApp":
+						func.launchApp();
+					case "fillText":
+						result=func.fillText(locator, locatorValue, data);
+					case "click":
+						func.click(locator, locatorValue);
+				}
+			} catch (Exception e) {
 			}
-			func.saveResultToExcelsheet("passed", i, 7);
+			
+			func.saveResultToExcelsheet(result, i, 7);
 		}
 		
 	}

@@ -24,18 +24,24 @@ public class ReusableFuntion {
 		driver.get("http://www.demo.guru99.com/V4/index.php");
 	}
 	
-	public void fillText(String locator,String locatorValue, String data) {
-		switch(locator) {
-			case "name":
-				driver.findElement(By.name(locatorValue)).sendKeys(data);
-				break;
-			case "id":
-				driver.findElement(By.id(locatorValue)).sendKeys(data);
-				break;
-			case "xpath":
-				driver.findElement(By.xpath(locatorValue)).sendKeys(data);
-				break;
+	public String fillText(String locator,String locatorValue, String data) {
+		String result="success";
+		try {
+			switch(locator) {
+				case "name":
+					driver.findElement(By.name(locatorValue)).sendKeys(data);
+					break;
+				case "id":
+					driver.findElement(By.id(locatorValue)).sendKeys(data);
+					break;
+				case "xpath":
+					driver.findElement(By.xpath(locatorValue)).sendKeys(data);
+					break;
+			}
+		} catch (Exception e) {
+			result="failed";
 		}
+		return result;
 		
 	}
 	public void click(String locator,String locatorValue) {
@@ -64,7 +70,8 @@ public class ReusableFuntion {
 	 * @throws Exception 
 	 */
 	public String[][] fetchDataFromExcelsheet() throws Exception {
-		String excel_location="C:\\Users\\Chandan\\Desktop\\Automation\\selenium\\testcases.xlsx";
+		String currentDir = System.getProperty("user.dir");
+		String excel_location=currentDir+"\\testcases.xlsx";
 		File file=new File(excel_location);
 		FileInputStream fs=new FileInputStream(file);
 		String extension=excel_location.substring(excel_location.indexOf(".")+1);
@@ -92,7 +99,8 @@ public class ReusableFuntion {
 		return data;
 	}
 	public void saveResultToExcelsheet(String result,  int rowNum, int colNum ) throws Exception {
-		String excel_location="C:\\Users\\Chandan\\Desktop\\Automation\\selenium\\testcases.xlsx";
+		String currentDir = System.getProperty("user.dir");
+		String excel_location=currentDir+"\\testcases.xlsx";
 		File file=new File(excel_location);
 		FileInputStream fs=new FileInputStream(file);
 		String extension=excel_location.substring(excel_location.indexOf(".")+1);
