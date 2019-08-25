@@ -16,7 +16,7 @@ public class FacebookTestCases {
 	  public void beforeTest() {
 		  	System.setProperty("webdriver.chrome.driver", "C:\\Users\\Chandan/Desktop\\browserDriver\\chromedriver.exe");
 			driver=new ChromeDriver();
-			driver.manage().window().maximize();
+			//driver.manage().window().maximize();
 			driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
 	  }
   

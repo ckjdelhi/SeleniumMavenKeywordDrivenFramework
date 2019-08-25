@@ -21,6 +21,7 @@ public class TestCaseExecutor {
 				case "click":
 					func.click(locator, locatorValue);
 			}
+			func.saveResultToExcelsheet("passed", i, 7);
 		}
 		
 	}

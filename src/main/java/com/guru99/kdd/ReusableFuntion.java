@@ -2,12 +2,14 @@ package com.guru99.kdd;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -75,7 +77,7 @@ public class ReusableFuntion {
 		}
 		Sheet sheet=wb.getSheet("Sheet1");
 		int rows=sheet.getLastRowNum()+1;
-		int cols=sheet.getRow(0).getLastCellNum();
+		int cols=sheet.getRow(0).getLastCellNum()-1;
 		//System.out.println("Rows: "+rows +"\t Cols="+cols);
 		String[][] data=new String[rows][cols];
 		for(int i=0;i<rows;i++) {
@@ -88,6 +90,38 @@ public class ReusableFuntion {
 		}
 		wb.close();
 		return data;
+	}
+	public void saveResultToExcelsheet(String result,  int rowNum, int colNum ) throws Exception {
+		String excel_location="C:\\Users\\Chandan\\Desktop\\Automation\\selenium\\testcases.xlsx";
+		File file=new File(excel_location);
+		FileInputStream fs=new FileInputStream(file);
+		String extension=excel_location.substring(excel_location.indexOf(".")+1);
+	
+		Workbook wb=null;
+		if(extension.equals("xls")) {
+			wb=new HSSFWorkbook(fs);//xls
+		}else {
+			wb=new XSSFWorkbook(fs);//xlsx
+		}
+		Sheet sheet=wb.getSheet("Sheet1");
+		
+		try {
+			Row row=sheet.getRow(rowNum);
+			Cell cell=row.getCell(colNum,MissingCellPolicy.RETURN_BLANK_AS_NULL);
+			if (cell == null) {
+				cell = row.createCell(colNum);
+				cell.setCellValue(result);
+			} else {
+				cell.setCellValue(result);
+			}
+			FileOutputStream fileOut = new FileOutputStream(file);
+	        wb.write(fileOut);
+            fileOut.flush();
+            fileOut.close();
+		}catch(Exception ex) {
+		}
+		
+		wb.close();
 	}
 	
 

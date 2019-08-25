@@ -29,7 +29,7 @@ public class GoogleTestCases {
 	  driver.findElement(By.name("btnK")).submit();
 	  Assert.assertEquals(driver.getTitle(), "studyautomation.com - Google Search");
   }
-  @Test(dependsOnMethods = "searchText")
+  @Test(dependsOnMethods = "searchText", enabled = false)
   public void clickOnFirstLink() {
 	  //driver.findElement(By.partialLinkText("Study Automation")).click();
 	  driver.findElement(By.xpath("//*[@id=\"rso\"]/div/div/div[1]/div/div/div[1]/a")).click();
